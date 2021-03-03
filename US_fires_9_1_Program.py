@@ -35,7 +35,7 @@ data = [{
     'lon': lons, 
     'lat': lats,
     'marker':{
-    'size':[5*mag for mag in mags], 
+    'size':10, 
     'color':mags,
     'colorscale':'Viridis', 
     'reversescale':True, 
