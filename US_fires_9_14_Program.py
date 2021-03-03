@@ -6,20 +6,20 @@ outfile = open("US_fires_9_14.json", "w")
 # the json.load() function converts the data into a
 # format Python can work with: in this case a
 # giant dictionary
-eq_data = json.load(infile)
+fire_data = json.load(infile)
 
-json.dump(eq_data, outfile, indent=4)
+json.dump(fire_data, outfile, indent=4)
 
-list_of_eqs = eq_data['features']
+list_of_fires = fire_data['features']
 
 brights,lons,lats = [],[],[]
 
 
-for eq in list_of_eqs:
-    bright = eq['brightness']
-    lon = eq['longitude']
-    lat = eq['latitude']
-    brights.append(mag)
+for fire in list_of_fires:
+    bright = fire['brightness']
+    lon = fire['longitude']
+    lat = fire['latitude']
+    brights.append(bright)
     lons.append(lon)
     lats.append(lat)
 
@@ -35,13 +35,13 @@ data = [{
     'lon': lons, 
     'lat': lats,
     'marker':{
-    'size':[5*bright for bright in brights], 
+    'size':10, 
     'color':brights,
     'colorscale':'Viridis', 
     'reversescale':True, 
     'colorbar':{'title':'Brightness'}}}]
 
-my_layout = Layout(title="California Fires")
+my_layout = Layout(title="California Fires - 9/14/20 through 9/20/20")
 
 fig = {"data":data, "layout":my_layout}
 
