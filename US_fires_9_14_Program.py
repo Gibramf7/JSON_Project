@@ -1,34 +1,38 @@
 import json
 
+from plotly.graph_objs import Scattergeo, Layout
+from plotly import offline
+
 infile = open("US_fires_9_14.json", "r")
-outfile = open("US_fires_9_14.json", "w")
+
 
 # the json.load() function converts the data into a
 # format Python can work with: in this case a
 # giant dictionary
-fire_data = json.load(infile)
 
-json.dump(fire_data, outfile, indent=4)
+us_fires = json.load(infile)
 
-list_of_fires = fire_data['features']
 
 brights,lons,lats = [],[],[]
 
+count = 0
 
-for fire in list_of_fires:
-    bright = fire['brightness']
-    lon = fire['longitude']
-    lat = fire['latitude']
-    brights.append(bright)
-    lons.append(lon)
-    lats.append(lat)
 
-print(brights[:10])
-print(lons[:10])
-print(lats[:10])
+for fire in us_fires:
+    bright = us_fires[count]['brightness']
+    lon = us_fires[count]['longitude']
+    lat = us_fires[count]['latitude']
 
-from plotly.graph_objs import Scattergeo, Layout
-from plotly import offline
+
+    if us_fires[count]["brightness"] > 450:
+        brights.append(bright)
+        lons.append(lon)
+        lats.append(lat)
+
+    count += 1
+
+    
+
 
 data = [{
     'type':'scattergeo', 
@@ -41,7 +45,7 @@ data = [{
     'reversescale':True, 
     'colorbar':{'title':'Brightness'}}}]
 
-my_layout = Layout(title="California Fires - 9/14/20 through 9/20/20")
+my_layout = Layout(title="US Fires - 9/14/2020 through 9/20/2020")
 
 fig = {"data":data, "layout":my_layout}
 
